@@ -1,29 +1,31 @@
 from enum import Enum
 
-class Organism:
-	# have they eaten recently
-	hungry
-	# chance to fight
-	fight
-	# chance to see predator
-	spot
-	# chance to mate when running into same species
-	mate
-	# where home is
-	home
-	# current location of organism
-	currLoc
-	def __init__(self, fight, spot, mate, home, currLoc):
+class Point:	
+	def __init__(self, row = 0, col = 0):
+		self.row = row
+		self.col = col
+
+class Organism:	
+	def __init__(self, name = '', fight = 1.0, spot = 1.0, mate = 1.0, home = Point(0, 0), currLoc = Point(0, 0)):
+		# org char value
+		self.name = name		
+		# have they eaten recently
+		self.hungry = 0
+		# chance to fight
 		self.fight = fight
+		# chance to see predator
 		self.spot = spot
-		self.mate = mate
+		# chance to mate when running into same species
+		self.mate = mate		
+		# where home is
 		self.home = home
-		self.currLoc = currLo
+		# current location of organism
+		self.currLoc = currLoc
 	
 
 class Prey(Organism):
-	def __init__(self, fight, spot, mate, home, currLoc):
-		super().__init__(fight, spot, mate, home, currLoc)
+	def __init__(self, name = '', fight = 1.0, spot = 1.0, mate = 1.0, home = Point(0, 0), currLoc = Point(0, 0)):
+		super().__init__(name, fight, spot, mate, home, currLoc)
 
 	def Move(self):
 		return Point(0, 0)
@@ -35,13 +37,12 @@ class Prey(Organism):
 		return Point(0, 0)
 	
 	def Eat(self):
-		hungry -= 5
+		self.hungry = 0
 
 
 class Predator(Organism):
-	counter
-	def __init__(self, fight, spot, mate, home, currLoc):
-		super().__init__(fight, spot, mate, home, currLoc)
+	def __init__(self, name = '', fight = 1.0, spot = 1.0, mate = 1.0, home = Point(0, 0), currLoc = Point(0, 0)):
+		super().__init__(name, fight, spot, mate, home, currLoc)
 	
 	def Move(self):
 		return Point(0, 0)
@@ -53,20 +54,13 @@ class Predator(Organism):
 		return Point(0, 0)
 	
 	def Eat(self):
-		hungry -= 5
+		self.hungry = 0
 		
 	def Fight(self):
 		return False
 
 	def ReturnHome(self):
 		return Point(0, 0)
-
-class Point:
-	row
-	col
-	def __init__(self, row = 0, col = 0):
-		self.row = row
-		self.col = col
 
 class OrgType(Enum):
 	DIRT = 0

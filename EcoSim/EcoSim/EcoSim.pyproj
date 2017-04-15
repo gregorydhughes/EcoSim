@@ -23,6 +23,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="EcoSim.py" />
+    <Compile Include="Environment.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Organism.py">
       <SubType>Code</SubType>
     </Compile>

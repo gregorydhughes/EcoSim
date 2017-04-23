@@ -1,9 +1,10 @@
 from enum import Enum
+import random
 
 class Point:	
 	def __init__(self, row = 0, col = 0):
-		self.row = row
-		self.col = col
+		self.row = int(row)
+		self.col = int(col)
 
 class Organism:	
 	def __init__(self, name = '', fight = 1.0, spot = 1.0, mate = 1.0, home = Point(0, 0), currLoc = Point(0, 0)):
@@ -21,11 +22,7 @@ class Organism:
 		self.home = home
 		# current location of organism
 		self.currLoc = currLoc
-
-	def mySelf(self):
-		return self.name
 	
-
 class Prey(Organism):
 	def __init__(self, name = '', fight = 1.0, spot = 1.0, mate = 1.0, home = Point(0, 0), currLoc = Point(0, 0)):
 		super().__init__(name, fight, spot, mate, home, currLoc)
@@ -47,8 +44,9 @@ class Predator(Organism):
 	def __init__(self, name = '', fight = 1.0, spot = 1.0, mate = 1.0, home = Point(0, 0), currLoc = Point(0, 0)):
 		super().__init__(name, fight, spot, mate, home, currLoc)
 	
-	def Move(self):
-		return Point(0, 0)
+	def Move(self, surroundingLocs = []):	
+		spot = random.randint(0, 7)
+		return surroundingLocs[spot]
 
 	def Mate(self):
 		return True

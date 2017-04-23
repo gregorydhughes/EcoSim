@@ -1,5 +1,6 @@
 from Environment import Environment
 
+
 cycles = int(input("How many cycles to run for: "))
 boardSize = int(input("What size board: "))
 
@@ -10,11 +11,11 @@ while (predators > 4):
 	predators = int(input("MAXSIZE = {}. How many predators in EcoSim: ".format(4)))
 
 speciesTotal = int(input("How many of each predator species in EcoSim: "))
-while (speciesTotal > (boardSize / 10)):
-	speciesTotal = int(input("MAXSIZE = {}. How many of each predator species in EcoSim: ".format(boardSize / 10)))
+while (speciesTotal > 8):
+	speciesTotal = int(input("MAXSIZE = {}. How many of each predator species in EcoSim: ".format(8)))
 
 
-predNames = ['.', '-', 'G']
+predNames = ['.', '-', '*']
 
 for i in range(predators):
 	name = input("Single character name for predator {}: ".format(i))	

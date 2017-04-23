@@ -21,6 +21,9 @@ class Organism:
 		self.home = home
 		# current location of organism
 		self.currLoc = currLoc
+
+	def mySelf(self):
+		return self.name
 	
 
 class Prey(Organism):

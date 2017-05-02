@@ -90,22 +90,13 @@ class Environment:
 		return locs
 
 	def getEmptyLocs(self, locs = []):
-
-		for loc in locs:
-			if loc.row < 0:
-				loc.row = self.boardSize - 1
-			if loc.row >= self.boardSize:
-				loc.row = 0
-			if loc.col < 0:
-				loc.col = self.boardSize - 1
-			if loc.col >= self.boardSize:
-				loc.col = 0
-		
+			
 		size = 7
 		while (size >= 0):
 			if (not self.board[locs[size].row][locs[size].col].empty()):
 				locs.pop(size)
-			size -= 1		
+			size -= 1
+
 		return locs
 
 	def populatHomeLocs(self, totalLocs):
@@ -212,7 +203,7 @@ class Environment:
 		newLoc = curNode.organism.Move(locations)
 
 		if (self.board[newLoc.row][newLoc.col].orgtype == OrgType.PRED):
-			if (curNode.organism.name == self.board[newLoc.row][newLoc.col].organism.name):							
+			if (curNode.organism.name == self.board[newLoc.row][newLoc.col].organism.name):
 				emptyLocs = self.getEmptyLocs(self.getSurroundingLocs(curNode.organism.currLoc))
 				if (len(emptyLocs) > 0 and curNode.organism.hungry <= 5 and self.board[newLoc.row][newLoc.col].organism.hungry <= 5):
 					babyLoc = emptyLocs[random.randint(0, len(emptyLocs) - 1)]

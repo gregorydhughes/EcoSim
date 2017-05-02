@@ -12,7 +12,7 @@ while (predators > 4):
 
 speciesTotal = 7
 
-predNames = ['.', '-', '*', '^']
+predNames = ['.', '-', '*', '`']
 
 for i in range(predators):
 	name = input("Single character name for predator {}: ".format(i))
@@ -26,5 +26,5 @@ totalPrey = predators * boardSize
 ecosystem.addPrey(totalPrey)
 
 for cycle in range(cycles):
-	print("CYCLE {}:".format(cycle))
+	#print("CYCLE {}:".format(cycle))
 	ecosystem.updateEnvironment()

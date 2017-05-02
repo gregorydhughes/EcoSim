@@ -55,7 +55,7 @@ class Environment:
 			surroundingLocs.pop(spot)
 
 			self.board[int(currLoc.row)][int(currLoc.col)].orgtype = OrgType.PRED
-			self.board[int(currLoc.row)][int(currLoc.col)].organism = Predator(name, 1.0, 1.0, 1.0, startLoc)
+			self.board[int(currLoc.row)][int(currLoc.col)].organism = Predator(name, startLoc)
 
 	def addPrey(self, totalPreyToAdd = 1):
 		for i in range(totalPreyToAdd):
@@ -120,21 +120,21 @@ class Environment:
 		return homeLoc	
 
 	def printBoard(self):
-		print(' ', end='')
+		tui = "  "		
 		for row in range(self.boardSize):
-			print("-", end='')
-		print()
+			tui += "- "
+		tui += "\n"  
 		for row in range(self.boardSize):
-			print("|", end='');			
+			tui += "| "			
 			for col in range(self.boardSize):
-				print(self.board[row][col].mySelf(), end='')
-			print("|")
-
-		print(' ', end='')
+				tui += self.board[row][col].mySelf()
+				tui += " "
+			tui += "|\n"
+		tui += '  '
 		for row in range(self.boardSize):
-			print("-", end='')
-		print()
-		print()
+			tui += "- "
+		tui += "\n"
+		print(tui)
 
 	def updateEnvironment(self):
 		for row in range(self.boardSize):
@@ -154,11 +154,9 @@ class Environment:
 		if curNode.moved == True:
 			return
 
-		if (not curNode.empty()):
-			if (int(curNode.organism.hungry) > 50):
-				print("Hunger: {}". format(curNode.organism.hungry))
+		if (not curNode.empty()):			
 			curNode.organism.hunger()
-			if (curNode.organism.hungry > 100):
+			if (curNode.organism.hungry > 10):
 				curNode.orgtype = None
 				curNode.organism = None
 				return
@@ -187,9 +185,9 @@ class Environment:
 
 		if (self.board[newLoc.row][newLoc.col].orgtype == OrgType.PREY):
 			emptyLocs = self.getEmptyLocs(self.getSurroundingLocs(curNode.organism.currLoc))
-			if (len(emptyLocs) > 0):
+			if (len(emptyLocs) > 0 and curNode.organism.hungry <= 5 and self.board[newLoc.row][newLoc.col].organism.hungry <= 5):
 				babyLoc = emptyLocs[random.randint(0, len(emptyLocs) - 1)]
-				self.board[babyLoc.row][babyLoc.col].organism = curNode.organism
+				self.board[babyLoc.row][babyLoc.col].organism = Prey(currLoc = babyLoc)
 				self.board[babyLoc.row][babyLoc.col].organism.currLoc = babyLoc
 				self.board[babyLoc.row][babyLoc.col].orgtype = curNode.orgtype
 				self.board[babyLoc.row][babyLoc.col].moved = True
@@ -214,11 +212,11 @@ class Environment:
 		newLoc = curNode.organism.Move(locations)
 
 		if (self.board[newLoc.row][newLoc.col].orgtype == OrgType.PRED):
-			if (curNode.organism.name == self.board[newLoc.row][newLoc.col].organism.name):								
+			if (curNode.organism.name == self.board[newLoc.row][newLoc.col].organism.name):							
 				emptyLocs = self.getEmptyLocs(self.getSurroundingLocs(curNode.organism.currLoc))
-				if (len(emptyLocs) > 0):
+				if (len(emptyLocs) > 0 and curNode.organism.hungry <= 5 and self.board[newLoc.row][newLoc.col].organism.hungry <= 5):
 					babyLoc = emptyLocs[random.randint(0, len(emptyLocs) - 1)]
-					self.board[babyLoc.row][babyLoc.col].organism = curNode.organism
+					self.board[babyLoc.row][babyLoc.col].organism = Predator(curNode.organism.name, babyLoc, hungry = 6)
 					self.board[babyLoc.row][babyLoc.col].organism.currLoc = babyLoc
 					self.board[babyLoc.row][babyLoc.col].orgtype = curNode.orgtype
 					self.board[babyLoc.row][babyLoc.col].moved = True
@@ -228,14 +226,14 @@ class Environment:
 				if (pred1 == 0):
 					curNode.organism = None
 					curNode.orgtype = OrgType.DIRT
-				else:
+				elif (pred1 == 1 and pred2 == 0):
 					curNode.moved = True
 					curNode.organism.Eat()
 					
 				if (pred2 == 0):
 					self.board[newLoc.row][newLoc.col].organism = None
 					self.board[newLoc.row][newLoc.col].orgtype = OrgType.DIRT
-				else:
+				elif (pred2 == 1 and pred1 == 0):
 					self.board[newLoc.row][newLoc.col].move = True
 					self.board[newLoc.row][newLoc.col].organism.Eat()
 

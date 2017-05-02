@@ -7,19 +7,13 @@ class Point:
 		self.col = int(col)
 
 class Organism:	
-	def __init__(self, name = '', fight = 1.0, spot = 1.0, mate = 1.0, currLoc = Point(0, 0)):
+	def __init__(self, name = '', currLoc = Point(0, 0), hungry = 0):
 		# org char value
 		self.name = name		
-		# have they eaten recently
-		self.hungry = 0
-		# chance to fight
-		self.fight = fight
-		# chance to see predator
-		self.spot = spot
-		# chance to mate when running into same species
-		self.mate = mate
 		# current location of organism
 		self.currLoc = currLoc
+		# have they eaten recently
+		self.hungry = hungry
 
 	def Move(self, surroundingLocs = []):
 		spot = random.randint(0, 7)
@@ -32,13 +26,13 @@ class Organism:
 		self.hungry = 0
 	
 class Prey(Organism):
-	def __init__(self, name = '^', fight = 1.0, spot = 1.0, mate = 1.0, currLoc = Point(0, 0)):
-		super().__init__(name, fight, spot, mate, currLoc)			
+	def __init__(self, name = '`', currLoc = Point(0, 0), hungry = 0):
+		super().__init__(name, currLoc, hungry)			
 	
 
 class Predator(Organism):
-	def __init__(self, name = '', fight = 1.0, spot = 1.0, mate = 1.0, currLoc = Point(0, 0)):
-		super().__init__(name, fight, spot, mate, currLoc)
+	def __init__(self, name = '', currLoc = Point(0, 0), hungry = 0):
+		super().__init__(name, currLoc, hungry)
 
 	def Fight(self):
 		return random.randint(0, 1)

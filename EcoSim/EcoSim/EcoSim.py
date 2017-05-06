@@ -12,14 +12,17 @@ while (predators > 4):
 
 speciesTotal = 7
 
-predNames = ['.', '-', '*', '`']
+#Const names already in use.
+namesInUse = ['.', '-', '*', '`']
+realPred = []
 
 for i in range(predators):
 	name = input("Single character name for predator {}: ".format(i))
-	while name in predNames:
+	while name in namesInUse:
 		name = input("Already Used. Single character name for predator {}: ".format(i))
 	
-	predNames.append(name)
+	namesInUse.append(name)
+	realPred.append(name)
 	ecosystem.addPredator(name, speciesTotal, ecosystem.getHomeLoc())
 
 totalPrey = predators * boardSize

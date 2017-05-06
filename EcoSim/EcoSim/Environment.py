@@ -17,8 +17,10 @@ class Node:
 	def mySelf(self):
 		if (self.organism == None):			
 			if (self.groundtype == OrgType.GRASS):
+				# Grass
 				return '*'
 			else:
+				# Dirt
 				return '.'
 		else:
 			return self.organism.name
@@ -243,3 +245,11 @@ class Environment:
 			self.board[newLoc.row][newLoc.col].moved = True											
 			curNode.organism = None
 			curNode.orgtype = None
+
+	def countRemainingPreditors():
+		count = 0	
+		for row in range(self.boardSize):		
+			for col in range(self.boardSize):
+				if (self.board[row][col].):
+					count += 1
+		return count

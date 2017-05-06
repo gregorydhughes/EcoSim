@@ -1,39 +1,41 @@
 from Environment import Environment
 
-
-cycles = int(input("How many cycles to run for: "))
-boardSize = int(input("What size board: "))
-
-ecosystem = Environment(boardSize)
-
-predators = int(input("How many predators in EcoSim: "))
-while (predators > 4):
-	predators = int(input("MAXSIZE = {}. How many predators in EcoSim: ".format(4)))
-
+# Python pseudo-constants
+cycles = 1000
+boardSize = 50
 speciesTotal = 7
 
-#Const names already in use.
-namesInUse = ['.', '-', '*', '`']
-realPred = []
+print("Runnning for {} time slices".format(cycles))
+print("Running with an environment of {} square units".format(boardSize * boardSize))
 
-for i in range(predators):
-	name = input("Single character name for predator {}: ".format(i))
-	while name in namesInUse:
-		name = input("Already Used. Single character name for predator {}: ".format(i))
-	
-	namesInUse.append(name)
-	realPred.append(name)
-	ecosystem.addPredator(name, speciesTotal, ecosystem.getHomeLoc())
+# Max of 4 predators
+preds = [4, 3, 2, 1]
+pNames = ['A', 'B', 'C', 'D']
 
-totalPrey = predators * boardSize
-ecosystem.addPrey(totalPrey)
+for numPredator in preds:
+	ecoOut = 'boardOut_{}.dat'.format(numPredator)
+	ecosystem = Environment(boardSize, ecoOut)
 
-file = open('out.dat', 'w')
+	for i in range(numPredator):
+		name = pNames[i]
+		ecosystem.addPredator(name, speciesTotal, ecosystem.getHomeLoc())
 
-for cycle in range(cycles):
-	file.write("Slice:\t{}".format(cycle))
-	file.write("Remaining predators:\t{}".format(ecosystem.countRemainingPredators()))
-	ecosystem.updateEnvironment()
-	print("slice {}".format(cycle))
+	totalPrey = numPredator * boardSize
+	ecosystem.addPrey(totalPrey)
 
-file.close()
+	filename = 'out_{}.dat'.format(numPredator)
+
+	file = open(filename, 'w')
+
+	pStr = 'for {} predators.'.format(numPredator)
+
+	for cycle in range(cycles):
+		file.write("Slice:\t{}\n".format(cycle))
+		file.write("Remaining predators:\t{}\n".format(ecosystem.countRemainingPredators()))
+		ecosystem.updateEnvironment(cycle)
+		print("Simulation {}% complete".format(round(((cycle * 100) / cycles), 2)), pStr)
+
+	print("Simulation complete".format(round(((cycle * 100) / cycles), 2)), pStr, '\n')
+	ecosystem.closeFileOutputForClass()
+	file.close()
+print('Simulation for 4 environments completed')

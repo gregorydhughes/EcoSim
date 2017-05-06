@@ -34,6 +34,23 @@ class Environment:
 		self.buildBoard()
 		self.homeLocs = []
 		self.populatHomeLocs(boardSize / 10)
+		self.filename = 'boardOut.dat'
+		self.file = open(self.filename, 'a')
+		sep = '----------'
+		file.write(sep)
+		file.write('NEW ECO SIM BEGINS HERE')
+		file.write(sep)
+		file.write('\n')
+
+	def __init__(self, boardSize = 20, filename = "boardOut.dat"):
+		# length of a side of the board
+		self.boardSize = boardSize
+		self.board = []
+		self.buildBoard()
+		self.homeLocs = []
+		self.populatHomeLocs(boardSize / 10)
+		self.filename = filename
+		self.file = open(self.filename, 'w')
 
 	# builds the board
 	def buildBoard(self):
@@ -112,8 +129,9 @@ class Environment:
 		self.homeLocs.pop(0)
 		return homeLoc	
 
-	def printBoard(self):
-		tui = "  "		
+	def printBoard(self, cycle):
+		tui = "{} remaining predators\n".format(self.countRemainingPredators())
+		tui += "  "		
 		for row in range(self.boardSize):
 			tui += "- "
 		tui += "\n"  
@@ -127,9 +145,14 @@ class Environment:
 		for row in range(self.boardSize):
 			tui += "- "
 		tui += "\n"
-		#print(tui)
+		sep = '----------------------------------------'
+		self.file.write(sep)
+		self.file.write('TIME SLICE {}'.format(cycle))
+		self.file.write(sep)
+		self.file.write('\n')
+		self.file.write(tui)
 
-	def updateEnvironment(self):
+	def updateEnvironment(self, cycle):
 		for row in range(self.boardSize):
 			for col in range(self.boardSize):
 				self.update(self.board[row][col], row, col)
@@ -138,7 +161,7 @@ class Environment:
 			for col in range(self.boardSize):
 				self.board[row][col].moved = False
 
-		self.printBoard()
+		self.printBoard(cycle)
 
 	
 
@@ -253,3 +276,6 @@ class Environment:
 				if (self.board[row][col].orgtype == OrgType.PRED):
 					count += 1
 		return count
+
+	def closeFileOutputForClass(self):
+		self.file.close()

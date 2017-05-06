@@ -127,7 +127,7 @@ class Environment:
 		for row in range(self.boardSize):
 			tui += "- "
 		tui += "\n"
-		print(tui)
+		#print(tui)
 
 	def updateEnvironment(self):
 		for row in range(self.boardSize):
@@ -246,10 +246,10 @@ class Environment:
 			curNode.organism = None
 			curNode.orgtype = None
 
-	def countRemainingPreditors():
+	def countRemainingPredators(self):
 		count = 0	
 		for row in range(self.boardSize):		
 			for col in range(self.boardSize):
-				if (self.board[row][col].):
+				if (self.board[row][col].orgtype == OrgType.PRED):
 					count += 1
 		return count

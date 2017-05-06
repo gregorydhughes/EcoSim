@@ -28,6 +28,12 @@ for i in range(predators):
 totalPrey = predators * boardSize
 ecosystem.addPrey(totalPrey)
 
+file = open('out.dat', 'w')
+
 for cycle in range(cycles):
-	#print("CYCLE {}:".format(cycle))
+	file.write("Slice:\t{}".format(cycle))
+	file.write("Remaining predators:\t{}".format(ecosystem.countRemainingPredators()))
 	ecosystem.updateEnvironment()
+	print("slice {}".format(cycle))
+
+file.close()

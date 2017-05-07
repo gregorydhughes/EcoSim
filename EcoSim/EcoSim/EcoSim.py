@@ -2,14 +2,14 @@ from Environment import Environment
 
 # Python pseudo-constants
 cycles = 1000
-boardSize = 50
+boardSize = 100
 speciesTotal = 7
 
 print("Runnning for {} time slices".format(cycles))
 print("Running with an environment of {} square units".format(boardSize * boardSize))
 
 # Max of 4 predators
-preds = [4, 3, 2, 1]
+preds = [4]#, 3, 2, 1]
 pNames = ['A', 'B', 'C', 'D']
 
 for numPredator in preds:

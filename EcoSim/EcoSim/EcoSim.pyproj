@@ -12,6 +12,7 @@
     <OutputPath>.</OutputPath>
     <Name>EcoSim</Name>
     <RootNamespace>EcoSim</RootNamespace>
+    <PublishUrl>D:\Users\Gregory\Desktop\thing\</PublishUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>

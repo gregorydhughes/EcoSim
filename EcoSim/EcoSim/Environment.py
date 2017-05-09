@@ -152,6 +152,25 @@ class Environment:
 		self.file.write('\n')
 		self.file.write(tui)
 
+	def printDemo(self, cycle):
+		#tui = "{} remaining predators\n".format(self.countRemainingPredators())
+		tui = "  "		
+		for row in range(self.boardSize):
+			tui += "- "
+		tui += "\n"  
+		for row in range(self.boardSize):
+			tui += "| "			
+			for col in range(self.boardSize):
+				tui += self.board[row][col].mySelf()
+				tui += " "
+			tui += "|\n"
+		tui += '  '
+		for row in range(self.boardSize):
+			tui += "- "
+		tui += "\n"
+		#print('TIME SLICE {}'.format(cycle))
+		print(tui)
+
 	def updateEnvironment(self, cycle):
 		for row in range(self.boardSize):
 			for col in range(self.boardSize):
@@ -161,7 +180,8 @@ class Environment:
 			for col in range(self.boardSize):
 				self.board[row][col].moved = False
 
-		self.printBoard(cycle)
+		#self.printBoard(cycle)
+		self.printDemo(cycle)
 
 	
 
